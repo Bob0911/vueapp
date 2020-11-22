@@ -1,4 +1,4 @@
-import { BaseCode } from "@/env.js";
+import env from "../env";
 const baseUrl = "/api/"
 const delay = (seconds) => {
   return new Promise(resolve => {
@@ -29,22 +29,29 @@ const http = async (apiPath, body) => {
   }
   return null
 }
-const formatQueryUrl = (url, query){
-  
+const formatQueryUrl = (url, query)=>{
+  let arr=[];
   for (const key in query) {
-    if (query.hasOwnProperty(key)) {
       const element = query[key];
-      
-    }
+      arr.push(`${key}=${encodeURIComponent(element)}`)
   }
-  if (url.indexOf("?") > -1) {
-
+  if (url.indexOf("?") === -1) {
+    return url+"?"+arr.join("&")
+  }else{
+    return url+"&"+arr.join("&")
   }
 }
 
 const login = async (username, password) => {
   const headers = new Headers();
-  headers.append("Authorization", `Basic ${BaseCode}`)
+  headers.append("Authorization", `Basic ${env.BaseCode}`)
+  var url = formatQueryUrl(env.AuthUrl,{username,password,scope:"server",grant_type:"password"})
+  const option = {
+    headers,
+    method:"POST"
+  }
+  var res = await fetch(url,option)
+  var content = res.json()
+  return content;
 }
-
-export { http };
+export { http,login };

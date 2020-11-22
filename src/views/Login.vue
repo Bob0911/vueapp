@@ -32,6 +32,7 @@
 </template>
 <script>
 import { Input, Button, Form } from "ant-design-vue";
+import { login } from "../services/Http";
 export default {
   data() {
     return {
@@ -43,8 +44,8 @@ export default {
   },
   components: { Input, Button, Form, FormItem: Form.Item },
   methods: {
-    handleSubmit(e) {
-      console.log(e, this.loginInput);
+    handleSubmit() {
+      console.log(login(this.loginInput.username,this.loginInput.password));
     }
   }
 };
