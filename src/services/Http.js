@@ -44,7 +44,7 @@ const formatQueryUrl = (url, query)=>{
 
 const login = async (username, password) => {
   const headers = new Headers();
-  headers.append("Authorization", `Basic ${env.BaseCode}`)
+  headers.append("Authorization", `Basic ${env.BasicCode}`)
   var url = formatQueryUrl(env.AuthUrl,{username,password,scope:"server",grant_type:"password"})
   const option = {
     headers,

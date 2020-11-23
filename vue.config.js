@@ -10,5 +10,17 @@ module.exports = {
         }
       }
     }
+  },
+  devServer: {
+    proxy: {
+      "/api": {
+        ws: true,
+        changeOrigin: true,
+        target: "https://justradeuat.jusdascm.com",
+        pathRewrite: {
+          '^/api': ''
+        }
+      }
+    }
   }
 };
